@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pl" ng-app="xeniaApp">
+<head>
+    <meta charset="utf-8">
+    <title>Xenia</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/angular-locale_pl-pl.js"></script>
+
+</head>
+<body ng-controller='EventsListCtrl'>
+ <ul class="event-list">
+    <li ng-repeat="event in events.events" class="event-list-el">
+        <div class="date">
+            <div class="day">{{event.startDate| date:'dd'}}</div>
+            <div class="month">{{event.startDate| date:'MMMM'}}</div>
+            <div class="year">{{event.startDate| date:'yyyy '}}</div>
+        </div>
+        <div class="event-title">{{event.title}}</div> 
+        <div class="edit-link"><a href="/event-edit/{{event.id}}">edytuj...</a></div>
+
+
+    </li>
+</ul>
+
+</body>
+</html>
