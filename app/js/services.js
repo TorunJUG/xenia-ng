@@ -13,3 +13,12 @@ xeniaServices.factory('Events', ['$resource',
     }
    ]
 );
+
+xeniaServices.factory('Prizes', ['$resource',
+    function($resource) {
+        return $resource('http://localhost:8080/prizes', {}, {
+            query: {method:'GET', isArray:false}
+        })
+    }
+]
+);

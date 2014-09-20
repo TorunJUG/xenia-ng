@@ -15,9 +15,26 @@
 
 </head>
 <body>
-    <ul>
-        <li><a href="#/events">Events</a></li>
-    </ul>
+<div class="container">
+    <nav class="navbar navbar-default" role="navigation" ng-controller="NavigationCtrl">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/">Xenia</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{ active: isActive('/events')}"><a href="#/events">Events</a></li>
+                    <li ng-class="{ active: isActive('/prizes')}"><a href="#/prizes">Prizes</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
     <div ng-view=""></div>
+</div>
 </body>
 </html>

@@ -1,5 +1,9 @@
 /* app css stylesheet */
 
+* {
+    outline: none !important;
+}
+
 body {
   padding-top: 20px;
 }

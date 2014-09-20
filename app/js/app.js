@@ -11,7 +11,15 @@ xeniaApp.config(['$routeProvider',
                 templateUrl: 'partials/events.html',
                 controller: 'EventsListCtrl'
             }).
+            when('/prizes', {
+                templateUrl: 'partials/prizes.html',
+                controller: 'PrizesCtrl'
+            }).
+            when('/prizes/add', {
+                templateUrl: 'partials/prizesAdd.html',
+                controller: 'PrizesCtrl'
+            }).
             otherwise({
-                redirectTo: '/'
+                redirectTo: '/events'
             });
     }]);
