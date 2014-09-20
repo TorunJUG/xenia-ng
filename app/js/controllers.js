@@ -11,14 +11,14 @@ xeniaControllers.controller('EventsListCtrl', ['$scope', 'Events', function($sco
 }]);
 
 xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', '$http', 'Prizes', function($scope, $location, $http, Prizes) {
-    $scope.prizes = Prizes.query();
+    $scope.list = Prizes.query();
 
     $scope.add = function() {
         $location.path('/prizes/add');
     }
 
     $scope.save = function(prize) {
-        if (prize != undefined) {
+        if (prize != undefined && $scope.prizeAddForm.$valid) {
             $http({
                 url: 'http://localhost:8080/prize',
                 method: 'POST',
@@ -27,9 +27,9 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', '$http', 'Priz
                 },
                 data: prize
             }).success(function(response){
-
+                    $location.path('/prizes');
                 }).error(function(){
-
+                    console.log('error :)');
                 });
         }
     }
