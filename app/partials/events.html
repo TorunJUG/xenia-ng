@@ -1,0 +1,14 @@
+
+<div ng-controller='EventsListCtrl'>
+    <ul class="event-list">
+        <li ng-repeat="event in events.events" class="event-list-el">
+            <div class="date">
+                <div class="day">{{event.startDate| date:'dd'}}</div>
+                <div class="month">{{event.startDate| date:'MMMM'}}</div>
+                <div class="year">{{event.startDate| date:'yyyy '}}</div>
+            </div>
+            <div class="event-title">{{event.title}}</div>
+            <div class="edit-link"><a href="/event-edit/{{event.id}}">edytuj...</a></div>
+        </li>
+    </ul>
+</div>
