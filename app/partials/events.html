@@ -1,5 +1,10 @@
 
 <div ng-controller='EventsListCtrl'>
+
+    <div class="well well-sm">
+        <button class="btn btn-primary" ng-click="refresh()">Refresh events</button>
+    </div>
+
     <ul class="event-list">
         <li ng-repeat="event in events.events" class="event-list-el">
             <div class="date">

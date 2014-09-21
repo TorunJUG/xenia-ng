@@ -5,6 +5,7 @@
 var xeniaApp = angular.module('xeniaApp', ['ngRoute', 'xeniaControllers', 'xeniaServices']);
 
 xeniaApp.value('serverUrl', 'http://localhost:8080');
+xeniaApp.value('notificationArea', '#process-notification-area');
 
 xeniaApp.config(['$routeProvider', '$httpProvider',
     function($routeProvider, $httpProvider) {

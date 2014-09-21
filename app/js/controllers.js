@@ -6,9 +6,26 @@ xeniaControllers.controller('NavigationCtrl', ['$scope', '$location', function($
     };
 }]);
 
-xeniaControllers.controller('EventsListCtrl', ['$scope', 'Events', function($scope, Events) {
-  $scope.events = Events.query()
-}]);
+xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'serverUrl', 'notificationArea', 'Events',
+    function($scope, $http, $route, serverUrl, notificationArea, Events) {
+        $scope.events = Events.query()
+
+        $scope.refresh = function() {
+            jQuery(notificationArea).html("Refreshing events...").fadeIn();
+
+            $http({
+                url: serverUrl + '/events/refresh',
+                method: 'GET'
+            }).success(function(response){
+                    jQuery(notificationArea).fadeOut();
+                    $route.reload();
+                }).error(function(){
+                    jQuery(notificationArea).fadeOut();
+                    displayError({text: 'An error has occurred'});
+                });
+        }
+    }
+]);
 
 xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', function($scope, $location, Prizes) {
     $scope.list = Prizes.query();
