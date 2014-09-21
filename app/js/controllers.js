@@ -27,13 +27,31 @@ xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'ser
     }
 ]);
 
-xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$routeParams', 'serverUrl', 'Event', 'Attendees',
-    function($scope, $routeParams, serverUrl, Event, Attendees){
+xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routeParams', 'serverUrl', 'Event', 'Attendees', 'GiveAways', 'Prizes', 'GiveAway',
+    function($scope, $route, $routeParams, serverUrl, Event, Attendees, GiveAways, Prizes, GiveAway){
         $scope.event = Event.get({id: $routeParams.id});
 
         $scope.attendees = Attendees.get({id: $routeParams.id});
 
         $scope.placeholderAvatar = 'http://img2.meetupstatic.com/img/458386242735519287330/noPhoto_50.png';
+
+        $scope.giveAways = GiveAways.get({id: $routeParams.id});
+
+        $scope.prizes = {prizes:[]};
+
+        $scope.createGiveAway = function() {
+            $scope.prizes = Prizes.query();
+            $('#createGiveAwayModal').modal();
+        }
+
+        $scope.saveGiveAway = function(input) {
+            if (input != undefined && $scope.createGiveAwayForm.$valid) {
+                GiveAway.save({id: $routeParams.id}, input, function(response){
+                    $('#createGiveAwayModal').modal('toggle');
+                    $route.reload();
+                });
+            }
+        }
     }
 ]);
 
@@ -58,7 +76,9 @@ xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'se
             }).success(function(response){
                     $location.path('/prizes');
                 }).error(function(){
-                    console.log('error :)');
+                    displayError({
+                        text: 'Error :)'
+                    });
                 });
         }
     };

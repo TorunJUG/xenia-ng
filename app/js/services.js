@@ -26,6 +26,20 @@ xeniaServices.factory('Attendees', ['$resource', 'serverUrl',
     }
 ]);
 
+xeniaServices.factory('GiveAways', ['$resource', 'serverUrl',
+    function($resource, serverUrl){
+        return $resource(serverUrl + '/event/:id/giveaways');
+    }
+]);
+
+xeniaServices.factory('GiveAway', ['$resource', 'serverUrl',
+    function($resource, serverUrl){
+        return $resource(serverUrl + '/event/:id/giveaway', {}, {
+            save: {method: 'POST', isArray: false}
+        });
+    }
+]);
+
 xeniaServices.factory('Prizes', ['$resource', 'serverUrl',
     function($resource, serverUrl) {
         return $resource(serverUrl + '/prizes', {}, {

@@ -12,7 +12,7 @@
         <tbody>
         <tr ng-repeat="prize in list.prizes">
             <td class="prize-thumb"><img ng-src="{{prize.imageUrl}}" /></td>
-            <td>{{prize.name}}</td>
+            <td>{{prize.name}}<br /><b>ID:</b> {{prize.id}}</td>
             <td>{{prize.producer}}</td>
             <td>{{prize.sponsorName}}</td>
         </tr>
