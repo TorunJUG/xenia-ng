@@ -27,6 +27,16 @@ xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'ser
     }
 ]);
 
+xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$routeParams', 'serverUrl', 'Event', 'Attendees',
+    function($scope, $routeParams, serverUrl, Event, Attendees){
+        $scope.event = Event.get({id: $routeParams.id});
+
+        $scope.attendees = Attendees.get({id: $routeParams.id});
+
+        $scope.placeholderAvatar = 'http://img2.meetupstatic.com/img/458386242735519287330/noPhoto_50.png';
+    }
+]);
+
 xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', function($scope, $location, Prizes) {
     $scope.list = Prizes.query();
 

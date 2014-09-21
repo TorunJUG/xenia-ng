@@ -14,6 +14,18 @@ xeniaServices.factory('Events', ['$resource', 'serverUrl',
    ]
 );
 
+xeniaServices.factory('Event', ['$resource', 'serverUrl',
+    function($resource, serverUrl){
+        return $resource(serverUrl + '/event/:id');
+    }
+]);
+
+xeniaServices.factory('Attendees', ['$resource', 'serverUrl',
+    function($resource, serverUrl){
+        return $resource(serverUrl + '/event/:id/attendees');
+    }
+]);
+
 xeniaServices.factory('Prizes', ['$resource', 'serverUrl',
     function($resource, serverUrl) {
         return $resource(serverUrl + '/prizes', {}, {

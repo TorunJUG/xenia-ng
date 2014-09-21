@@ -15,7 +15,7 @@
                 <div class="year">{{event.startDate| date:'yyyy '}}</div>
             </div>
             <div class="event-title">{{event.title}}</div>
-            <div class="edit-link"><a href="/event-edit/{{event.id}}">edytuj...</a></div>
+            <div class="edit-link"><a ng-href="#/event/{{event.id}}">edytuj...</a></div>
         </li>
     </ul>
 </div>

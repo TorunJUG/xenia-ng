@@ -101,3 +101,13 @@ body {
     height: auto;
     max-width: 60px;
 }
+
+.member-avatar {
+    width: 50px;
+}
+
+.member-avatar img {
+    height: 48px;
+    width: 48px;
+    border-radius:24px;
+}

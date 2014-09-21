@@ -1,0 +1,25 @@
+<div ng-controller="EventDetailsCtrl">
+    <h1 class="page-header">{{event.title}}</h1>
+
+    <div class="well well-sm">
+        <button class="btn btn-primary" ng-click="">Create giveaways</button>
+    </div>
+
+    <table class="table" ng-if="attendees.attendees.length">
+        <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="member in attendees.attendees" data-member-id="{{member.id}}">
+            <td class="member-avatar">
+                <img ng-if="member.photoUrl.length" ng-src="{{member.photoUrl}}" />
+                <img ng-if="!member.photoUrl.length" ng-src="{{placeholderAvatar}}" />
+            </td>
+            <td>{{member.displayName}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

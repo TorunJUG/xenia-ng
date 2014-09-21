@@ -19,6 +19,10 @@ xeniaApp.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'partials/events.html',
                 controller: 'EventsListCtrl'
             }).
+            when('/event/:id', {
+                templateUrl: 'partials/eventDetails.html',
+                controller: 'EventDetailsCtrl'
+            }).
             when('/prizes', {
                 templateUrl: 'partials/prizes.html',
                 controller: 'PrizesCtrl'
