@@ -91,3 +91,13 @@ body {
     color: #666;
     font-size: 12pt;
 }
+
+.prize-thumb {
+    width: 60px;
+}
+
+.prize-thumb img {
+    width: auto;
+    height: auto;
+    max-width: 60px;
+}
