@@ -5,21 +5,17 @@
         <button class="btn btn-primary" ng-click="">Create giveaways</button>
     </div>
 
-    <table class="table" ng-if="attendees.attendees.length">
-        <thead>
-        <tr>
-            <th>Photo</th>
-            <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="member in attendees.attendees" data-member-id="{{member.id}}">
-            <td class="member-avatar">
+    <div class="col-lg-12" ng-if="attendees.attendees.length">
+
+        <div class="col-lg-4 member-block" ng-repeat="member in attendees.attendees" data-member-id="{{member.id}}">
+            <div class="member-avatar">
                 <img ng-if="member.photoUrl.length" ng-src="{{member.photoUrl}}" />
                 <img ng-if="!member.photoUrl.length" ng-src="{{placeholderAvatar}}" />
-            </td>
-            <td>{{member.displayName}}</td>
-        </tr>
-        </tbody>
-    </table>
+            </div>
+            <div class="member-info">
+                <p class="name">{{member.displayName}}</p>
+                <p class="win-info bg-success">Licencja IntelliJ IDEA</p>
+            </div>
+        </div>
+    </div>
 </div>

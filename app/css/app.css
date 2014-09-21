@@ -102,12 +102,34 @@ body {
     max-width: 60px;
 }
 
-.member-avatar {
+.member-block {
+    position: relative;
+    height: 80px;
+}
+
+.member-block .member-avatar {
+    position: absolute;
+    top:8px;
+    left: 5px;
     width: 50px;
 }
 
-.member-avatar img {
+.member-block .member-avatar img {
     height: 48px;
     width: 48px;
     border-radius:24px;
+}
+
+.member-block .member-info {
+    margin: 0 0 0 60px;
+}
+
+.member-block .member-info p {
+    line-height: 1.4em;
+    margin: 0;
+    padding: 4px;
+}
+
+.member-block .member-info p.name {
+    font-weight: bold;
 }
