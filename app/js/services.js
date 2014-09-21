@@ -50,15 +50,13 @@ xeniaServices.factory('Draws', ['$resource', 'serverUrl',
 
 xeniaServices.factory('DrawPost', ['$resource', 'serverUrl',
     function($resource, serverUrl){
-        return $resource(serverUrl + '/event/:eventId/giveaway/:id/draw', {}, {
-            post: {method: 'POST', isArray: false}
-        });
+        return $resource(serverUrl + '/event/:eventId/giveaway/:id/draw');
     }
 ]);
 
 xeniaServices.factory('Draw', ['$resource', 'serverUrl',
     function($resource, serverUrl){
-        return $resource(serverUrl + ':draw_resource', {}, {
+        return $resource(serverUrl + '/event/:eventId/giveaway/:giveawayId/draw/:id', {}, {
             query: {method: 'GET', isArray: false}
         });
     }
@@ -66,8 +64,9 @@ xeniaServices.factory('Draw', ['$resource', 'serverUrl',
 
 xeniaServices.factory('DrawConfirm', ['$resource', 'serverUrl',
     function($resource, serverUrl){
-        return $resource(serverUrl + ':draw_resource', {}, {
-            confirm: {method: 'PATCH', isArray: false}
+        return $resource(serverUrl + '/event/:eventId/giveaway/:giveawayId/draw/:id', {}, {
+           
+            confirm: {method: 'PATCH', isArray: false, }
         });
     }
 ]);

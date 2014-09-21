@@ -23,7 +23,7 @@
         <tr ng-repeat="giveAway in giveAways.giveAways">
             <td style="width:320px;">{{giveAway.prizeName}}</td>
             <td>{{giveAway.amount}}</td>
-            <td><button class="btn btn-primary draw-button" ng-click="drawDialog(giveAway.amount, giveAway.prizeName, giveAway.id)">Prize Draw!</button></td>
+            <td><button class="btn btn-primary draw-button" ng-click="drawDialog(giveAway)">Prize Draw!</button></td>
         </tr>
         </tbody>
     </table>
@@ -54,7 +54,7 @@
                     <h4 class="modal-title" id="myModalLabel">Draw {{prizeName}}</h4>
                 </div>
                 <div class=" draw-prize-placement">
-                    <button class="btn btn-primary draw-prize-button" ng-click="draw(giveAwayId)">Draw!</button>
+                    <button class="btn btn-primary draw-prize-button" ng-click="draw(giveAwayId)" ng-if="giveAwayEnabled">Draw!</button>
                 </div>
                 <table class="table" ng-if="draws.draws.length">
                     <thead>
@@ -85,6 +85,10 @@
                 <h3>Winner is {{winner.attendeeName}}</h3>
                 confirm?
                 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" ng-click="confirm()">Yes</button>
             </div>
         </div>
     </div>

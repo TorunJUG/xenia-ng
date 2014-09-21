@@ -27,8 +27,8 @@ xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'ser
     }
 ]);
 
-xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routeParams', 'serverUrl', 'Event', 'Attendees', 'GiveAways', 'Prizes', 'GiveAway', 'Draws', 'DrawPost', 'Draw',
-    function($scope, $route, $routeParams, serverUrl, Event, Attendees, GiveAways, Prizes, GiveAway, Draws, DrawPost, Draw){
+xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routeParams', 'serverUrl', 'Event', 'Attendees', 'GiveAways', 'Prizes', 'GiveAway', 'Draws', 'DrawPost', 'Draw', 'DrawConfirm',
+    function($scope, $route, $routeParams, serverUrl, Event, Attendees, GiveAways, Prizes, GiveAway, Draws, DrawPost, Draw, DrawConfirm){
         $scope.event = Event.get({id: $routeParams.id});
 
         $scope.attendees = Attendees.get({id: $routeParams.id});
@@ -53,25 +53,35 @@ xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routePara
             }
         }
         
-        $scope.drawDialog = function(amount, prizeName, giveAwayId) {
-            $scope.draws = Draws.query({eventId: $routeParams.id, id: giveAwayId})
-            $scope.amount = amount
-            $scope.prizeName = prizeName
-            $scope.giveAwayId = giveAwayId
+        $scope.drawDialog = function(giveAway) {
+            $scope.draws = Draws.query({eventId: $routeParams.id, id: giveAway.id})
+            $scope.amount = giveAway.amount
+            $scope.prizeName = giveAway.prizeName
+            $scope.giveAwayId = giveAway.id
+            $scope.giveAwayEnabled = giveAway.enabled
             $('#createDrawPrizeModal').modal();
         }
         
-        $scope.draw = function(input, giveAwayId ) {
+        $scope.draw = function(input) {
         
-            DrawPost.post({eventId: $routeParams.id, id: $scope.giveAwayId}, input, function(response){
-            alert(response.data)
-                 $scope.winner = Draw.query({draw_resource: response.data.resourceUrl})
+            DrawPost.save({eventId: $routeParams.id, id: $scope.giveAwayId}, input, function(response){
+                 drawId = response.resourceUrl.split("/").slice(-1)[0] 
+                 $scope.winner = Draw.query({eventId: $routeParams.id, giveawayId: $scope.giveAwayId, id: drawId})
                  $('#createPrizeDrawnModal').modal();    
                 
             })
-            
-           
         }
+
+        $scope.confirm = function(input) {
+            
+            DrawConfirm.confirm({eventId: $routeParams.id, giveawayId: $scope.giveAwayId, id: $scope.winner.id}, {confirmed: "true"}, function(response){
+                alert(response.resourceUrl)            
+                 drawId = response.resourceUrl.split("/").slice(-1)[0]
+                  alert(drawId)
+            })
+        }
+
+        
     }
 ]);
 
