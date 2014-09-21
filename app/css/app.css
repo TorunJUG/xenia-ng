@@ -37,6 +37,15 @@ body {
     display: inline-block;
     float: right;
 }
+
+.draw-prize-placement {
+    text-align:center;
+}
+.draw-prize-button {
+    text-align:center;
+    margin: 5px 0 0 0;
+}
+
 .date {
     display: inline-block;
     width: 80px;

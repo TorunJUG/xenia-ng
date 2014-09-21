@@ -27,8 +27,8 @@ xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'ser
     }
 ]);
 
-xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routeParams', 'serverUrl', 'Event', 'Attendees', 'GiveAways', 'Prizes', 'GiveAway',
-    function($scope, $route, $routeParams, serverUrl, Event, Attendees, GiveAways, Prizes, GiveAway){
+xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routeParams', 'serverUrl', 'Event', 'Attendees', 'GiveAways', 'Prizes', 'GiveAway', 'Draws', 'DrawPost', 'Draw',
+    function($scope, $route, $routeParams, serverUrl, Event, Attendees, GiveAways, Prizes, GiveAway, Draws, DrawPost, Draw){
         $scope.event = Event.get({id: $routeParams.id});
 
         $scope.attendees = Attendees.get({id: $routeParams.id});
@@ -53,10 +53,22 @@ xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routePara
             }
         }
         
-        $scope.draw = function(amount, prizeName) {
+        $scope.drawDialog = function(amount, prizeName, giveAwayId) {
+            $scope.draws = Draws.query({eventId: $routeParams.id, id: giveAwayId})
             $scope.amount = amount
             $scope.prizeName = prizeName
+            $scope.giveAwayId = giveAwayId
             $('#createDrawPrizeModal').modal();
+        }
+        
+        $scope.draw = function(giveAwayId) {
+        
+            winnerResource = DrawPost.save({eventId: $routeParams.id, id: giveAwayId})
+            alert(winnerResource.resourceUrl)
+            $scope.winner = Draw.query({draw_resource: winnerResource})
+//            $scope.amount = amount
+//            $scope.prizeName = prizeName
+            $('#createPrizeDrawnModal').modal();
         }
     }
 ]);

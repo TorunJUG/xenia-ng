@@ -23,7 +23,7 @@
         <tr ng-repeat="giveAway in giveAways.giveAways">
             <td style="width:320px;">{{giveAway.prizeName}}</td>
             <td>{{giveAway.amount}}</td>
-            <td><button class="btn btn-primary draw-button" ng-click="draw($giveAway.amount, $giveAway.prizeName)">Prize Draw!</button></td>
+            <td><button class="btn btn-primary draw-button" ng-click="drawDialog(giveAway.amount, giveAway.prizeName, giveAway.id)">Prize Draw!</button></td>
         </tr>
         </tbody>
     </table>
@@ -53,11 +53,42 @@
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title" id="myModalLabel">Draw {{prizeName}}</h4>
                 </div>
+                <div class=" draw-prize-placement">
+                    <button class="btn btn-primary draw-prize-button" ng-click="draw(giveAwayId)">Draw!</button>
+                </div>
+                <table class="table" ng-if="draws.draws.length">
+                    <thead>
+                    <tr>
+                        <th>Winner</th>
+                        <th>confirmed</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="draw in draws.draws">
+                        <td>{{draw.attendeeName}}</td>
+                        <td>{{draw.confirmed}}</td>
+                        
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        
-        
     </div>
+
+    <div class="modal fade" id="createPrizeDrawnModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Draw Complete!</h4>
+                </div>
+                
+                <h3>Winner is {{winner.attendeeName}}</h3>
+                confirm?
+                
+            </div>
+        </div>
+    </div>
+    
     
     <div class="modal fade" id="createGiveAwayModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
