@@ -5,18 +5,18 @@
 var xeniaServices = angular.module('xeniaServices', ['ngResource']);
 
 
-xeniaServices.factory('Events', ['$resource', 
-    function($resource) {
-        return $resource('http://localhost:8080/events', {}, {
+xeniaServices.factory('Events', ['$resource', 'serverUrl',
+    function($resource, serverUrl) {
+        return $resource(serverUrl + '/events', {}, {
             query: {method:'GET', isArray:false}
         })
     }
    ]
 );
 
-xeniaServices.factory('Prizes', ['$resource',
-    function($resource) {
-        return $resource('http://localhost:8080/prizes', {}, {
+xeniaServices.factory('Prizes', ['$resource', 'serverUrl',
+    function($resource, serverUrl) {
+        return $resource(serverUrl + '/prizes', {}, {
             query: {method:'GET', isArray:false}
         })
     }

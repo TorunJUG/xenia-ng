@@ -4,6 +4,8 @@
 
 var xeniaApp = angular.module('xeniaApp', ['ngRoute', 'xeniaControllers', 'xeniaServices']);
 
+xeniaApp.value('serverUrl', 'http://localhost:8080');
+
 xeniaApp.config(['$routeProvider', '$httpProvider',
     function($routeProvider, $httpProvider) {
         //Enable cross domain calls
@@ -22,7 +24,7 @@ xeniaApp.config(['$routeProvider', '$httpProvider',
             }).
             when('/prizes/add', {
                 templateUrl: 'partials/prizesAdd.html',
-                controller: 'PrizesCtrl'
+                controller: 'PrizeAddCtrl'
             }).
             otherwise({
                 redirectTo: '/events'
