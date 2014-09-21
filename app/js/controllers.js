@@ -61,14 +61,16 @@ xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routePara
             $('#createDrawPrizeModal').modal();
         }
         
-        $scope.draw = function(giveAwayId) {
+        $scope.draw = function(input, giveAwayId ) {
         
-            winnerResource = DrawPost.save({eventId: $routeParams.id, id: giveAwayId})
-            alert(winnerResource.resourceUrl)
-            $scope.winner = Draw.query({draw_resource: winnerResource})
-//            $scope.amount = amount
-//            $scope.prizeName = prizeName
-            $('#createPrizeDrawnModal').modal();
+            DrawPost.post({eventId: $routeParams.id, id: $scope.giveAwayId}, input, function(response){
+            alert(response.data)
+                 $scope.winner = Draw.query({draw_resource: response.data.resourceUrl})
+                 $('#createPrizeDrawnModal').modal();    
+                
+            })
+            
+           
         }
     }
 ]);

@@ -51,7 +51,7 @@ xeniaServices.factory('Draws', ['$resource', 'serverUrl',
 xeniaServices.factory('DrawPost', ['$resource', 'serverUrl',
     function($resource, serverUrl){
         return $resource(serverUrl + '/event/:eventId/giveaway/:id/draw', {}, {
-            save: {method: 'POST', isArray: false}
+            post: {method: 'POST', isArray: false}
         });
     }
 ]);
