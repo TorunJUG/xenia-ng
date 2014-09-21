@@ -23,7 +23,9 @@
         <tr ng-repeat="giveAway in giveAways.giveAways">
             <td style="width:320px;">{{giveAway.prizeName}}</td>
             <td>{{giveAway.amount}}</td>
-            <td><button class="btn btn-primary draw-button" ng-click="drawDialog(giveAway)">Prize Draw!</button></td>
+            <td>
+                <button class="btn btn-primary draw-button" ng-click="drawDialog(giveAway)">Prize Draw!</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -35,26 +37,30 @@
 
         <div class="col-lg-4 member-block" ng-repeat="member in attendees.attendees" data-member-id="{{member.id}}">
             <div class="member-avatar">
-                <img ng-if="member.photoUrl.length" ng-src="{{member.photoUrl}}" />
-                <img ng-if="!member.photoUrl.length" ng-src="{{placeholderAvatar}}" />
+                <img ng-if="member.photoUrl.length" ng-src="{{member.photoUrl}}"/>
+                <img ng-if="!member.photoUrl.length" ng-src="{{placeholderAvatar}}"/>
             </div>
             <div class="member-info">
                 <p class="name">{{member.displayName}}</p>
+
                 <p class="win-info bg-success">Licencja IntelliJ IDEA</p>
             </div>
         </div>
     </div>
 
-    
+
     <div class="modal fade" id="createDrawPrizeModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Draw {{prizeName}}</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Draw {{giveaway.prizeName}}</h4>
                 </div>
-                <div class=" draw-prize-placement">
-                    <button class="btn btn-primary draw-prize-button" ng-click="draw(giveAwayId)" ng-if="giveAwayEnabled">Draw!</button>
+                <div class=" draw-prize-placement" >
+                    <button class="btn btn-primary draw-prize-button" ng-click="draw(giveaway.id)"
+                            ng-if="giveaway.enabled">Draw!
+                    </button>
                 </div>
                 <table class="table" ng-if="draws.draws.length">
                     <thead>
@@ -67,7 +73,7 @@
                     <tr ng-repeat="draw in draws.draws">
                         <td>{{draw.attendeeName}}</td>
                         <td>{{draw.confirmed}}</td>
-                        
+
                     </tr>
                     </tbody>
                 </table>
@@ -81,10 +87,11 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Draw Complete!</h4>
                 </div>
-                
-                <h3>Winner is {{winner.attendeeName}}</h3>
-                confirm?
-                
+                <div class="modal-body">
+                    <div class="winner">Winner is {{winner.attendeeName}}</div>
+                    <div class="confirm">confirm?</div>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -92,13 +99,14 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <div class="modal fade" id="createGiveAwayModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title" id="myModalLabel">Create new give-away</h4>
                 </div>
                 <div class="modal-body">
@@ -106,7 +114,8 @@
                         <select ng-model="giveAway.prizeId" class="form-control">
                             <option ng-repeat="prize in prizes.prizes" value="{{prize.id}}">{{prize.name}}</option>
                         </select>
-                        <input type="number" placeholder="Amount" name="amount" min="1" style="width:80px;" ng-model="giveAway.amount" class="form-control" />
+                        <input type="number" placeholder="Amount" name="amount" min="1" style="width:80px;"
+                               ng-model="giveAway.amount" class="form-control"/>
                     </form>
                 </div>
                 <div class="modal-footer">

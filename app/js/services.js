@@ -31,6 +31,13 @@ xeniaServices.factory('GiveAways', ['$resource', 'serverUrl',
         return $resource(serverUrl + '/event/:id/giveaways');
     }
 ]);
+xeniaServices.factory('GiveAwaySingle', ['$resource', 'serverUrl',
+    function($resource, serverUrl){
+        return $resource(serverUrl + '/event/:eventId/giveaway/:id', {}, {
+            query: {method: 'GET', isArray: false}
+         });
+    }
+]);
 
 xeniaServices.factory('GiveAway', ['$resource', 'serverUrl',
     function($resource, serverUrl){
@@ -66,7 +73,7 @@ xeniaServices.factory('DrawConfirm', ['$resource', 'serverUrl',
     function($resource, serverUrl){
         return $resource(serverUrl + '/event/:eventId/giveaway/:giveawayId/draw/:id', {}, {
            
-            confirm: {method: 'PATCH', isArray: false, }
+            confirm: {method: 'PATCH', isArray: false }
         });
     }
 ]);
