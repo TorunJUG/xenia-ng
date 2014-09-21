@@ -52,6 +52,12 @@ xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routePara
                 });
             }
         }
+        
+        $scope.draw = function(amount, prizeName) {
+            $scope.amount = amount
+            $scope.prizeName = prizeName
+            $('#createDrawPrizeModal').modal();
+        }
     }
 ]);
 

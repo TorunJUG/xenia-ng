@@ -34,6 +34,10 @@ body {
     font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
 }
 
+.draw-button {
+    display: inline-block;
+    float: right;
+}
 .date {
     display: inline-block;
     float: 'left';
