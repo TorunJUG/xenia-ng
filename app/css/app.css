@@ -10,6 +10,7 @@ body {
 
 .event-list {
     list-style: none;
+    margin: 20px 0 0 0;
 }
 
 .edit-link {
@@ -20,8 +21,6 @@ body {
 }
 
 .event-list-el {
-
-    background: #dad8d8;
     margin: 0 0 3px 0;
     width: 600px;
 
@@ -40,7 +39,6 @@ body {
 }
 .date {
     display: inline-block;
-    float: 'left';
     width: 80px;
     height: 80px;
     background: #fcfcfc;
