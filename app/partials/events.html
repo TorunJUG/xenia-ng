@@ -6,7 +6,7 @@
         <button class="btn btn-primary" ng-click="refresh()">Refresh events</button>
     </div>
 
-    <ul class="event-list">
+    <ul class="event-list" ng-if="events.events.length">
         <li ng-repeat="event in events.events" class="event-list-el">
             <a ng-href="#/event/{{event.id}}">
                 <div class="date">
@@ -19,5 +19,7 @@
         </li>
     </ul>
 
-    
+    <div ng-if="!events.events.length" class="alert alert-info">
+        <p>There are no meetup events synchronized yet. <b>Refresh events.</b></p>
+    </div>
 </div>
