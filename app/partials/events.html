@@ -4,19 +4,20 @@
 
     <div class="well well-sm">
         <button class="btn btn-primary" ng-click="refresh()">Refresh events</button>
-        <ul class="event-list">
-            <li ng-repeat="event in events.events" class="event-list-el">
-                <a ng-href="#/event/{{event.id}}">
-                    <div class="date">
-                        <div class="day">{{event.startDate| date:'dd'}}</div>
-                        <div class="month">{{event.startDate| date:'MMMM'}}</div>
-                        <div class="year">{{event.startDate| date:'yyyy '}}</div>
-                    </div>
-                    <div class="event-title">{{event.title}}</div>
-                </a>
-            </li>
-        </ul>
     </div>
+
+    <ul class="event-list">
+        <li ng-repeat="event in events.events" class="event-list-el">
+            <a ng-href="#/event/{{event.id}}">
+                <div class="date">
+                    <div class="day">{{event.startDate| date:'dd'}}</div>
+                    <div class="month">{{event.startDate| date:'MMMM'}}</div>
+                    <div class="year">{{event.startDate| date:'yyyy '}}</div>
+                </div>
+                <div class="event-title">{{event.title}}</div>
+            </a>
+        </li>
+    </ul>
 
     
 </div>
