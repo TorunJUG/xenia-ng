@@ -16,6 +16,7 @@
         <tr>
             <th>Give-away name</th>
             <th>Amount</th>
+            <th>Winners</th>
             <th></th>
         </tr>
         </thead>
@@ -23,6 +24,9 @@
         <tr ng-repeat="giveAway in giveAways.giveAways">
             <td style="width:320px;">{{giveAway.prizeName}}</td>
             <td>{{giveAway.amount}}</td>
+            <td>
+                <span ng-repeat="winner in giveAway.winners">{{winner.displayName}}, </span>
+            </td>
             <td>
                 <button class="btn btn-primary draw-button" ng-click="drawDialog(giveAway)">Prize Draw!</button>
             </td>
@@ -55,28 +59,30 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span
                             aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Draw {{giveaway.prizeName}}</h4>
+                    <h4 class="modal-title">Draw: {{giveaway.prizeName}}</h4>
                 </div>
-                <div class=" draw-prize-placement" >
-                    <button class="btn btn-primary draw-prize-button" ng-click="draw(giveaway.id)"
+                <div class="modal-body">
+                    <table class="table" ng-if="draws.draws.length">
+                        <thead>
+                        <tr>
+                            <th>Winner</th>
+                            <th>confirmed</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="draw in draws.draws">
+                            <td>{{draw.attendeeName}}</td>
+                            <td><span class="label label-{{draw.confirmed ? 'success' : 'danger'}}">{{draw.confirmed}}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p ng-if="!draws.draws.length">There are no winners of this give-away yet. <strong>Draw first prize</strong></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="draw(giveaway.id)"
                             ng-if="giveaway.enabled">Draw!
                     </button>
                 </div>
-                <table class="table" ng-if="draws.draws.length">
-                    <thead>
-                    <tr>
-                        <th>Winner</th>
-                        <th>confirmed</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="draw in draws.draws">
-                        <td>{{draw.attendeeName}}</td>
-                        <td>{{draw.confirmed}}</td>
-
-                    </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -85,17 +91,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Draw Complete!</h4>
+                    <h4 class="modal-title">Draw Complete!</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="winner">Winner is {{winner.attendeeName}}</div>
-                    <div class="confirm">confirm?</div>
+                    <p class="winner-photo" ng-if="winner.attendeeAvatarUrl">
+                        <img ng-src="{{winner.attendeeAvatarUrl}}"/>
+                    </p>
+                    <p class="winner">And the winner is... <span class="name">{{winner.attendeeName}}</span></p>
+                    <p class="confirm">Is {{winner.attendeeName}} present?</p>
                 </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" ng-click="confirm()">Yes</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" ng-click="confirm()">Yes</button>
+                </div>
             </div>
         </div>
     </div>

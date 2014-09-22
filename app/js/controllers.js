@@ -1,25 +1,25 @@
 var xeniaControllers = angular.module('xeniaControllers', []);
 
-xeniaControllers.controller('NavigationCtrl', ['$scope', '$location', function($scope, $location) {
+xeniaControllers.controller('NavigationCtrl', ['$scope', '$location', function ($scope, $location) {
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
 }]);
 
 xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'serverUrl', 'notificationArea', 'Events',
-    function($scope, $http, $route, serverUrl, notificationArea, Events) {
+    function ($scope, $http, $route, serverUrl, notificationArea, Events) {
         $scope.events = Events.query()
 
-        $scope.refresh = function() {
+        $scope.refresh = function () {
             jQuery(notificationArea).html("Refreshing events...").fadeIn();
 
             $http({
                 url: serverUrl + '/events/refresh',
                 method: 'GET'
-            }).success(function(response){
+            }).success(function (response) {
                     jQuery(notificationArea).fadeOut();
                     $route.reload();
-                }).error(function(){
+                }).error(function () {
                     jQuery(notificationArea).fadeOut();
                     displayError({text: 'An error has occurred'});
                 });
@@ -28,7 +28,7 @@ xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'ser
 ]);
 
 xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routeParams', 'serverUrl', 'Event', 'Attendees', 'GiveAways', 'GiveAwaySingle', 'Prizes', 'GiveAway', 'Draws', 'DrawPost', 'Draw', 'DrawConfirm',
-    function($scope, $route, $routeParams, serverUrl, Event, Attendees, GiveAways, GiveAwaySingle, Prizes, GiveAway, Draws, DrawPost, Draw, DrawConfirm){
+    function ($scope, $route, $routeParams, serverUrl, Event, Attendees, GiveAways, GiveAwaySingle, Prizes, GiveAway, Draws, DrawPost, Draw, DrawConfirm) {
         $scope.event = Event.get({id: $routeParams.id});
 
         $scope.attendees = Attendees.get({id: $routeParams.id});
@@ -37,70 +37,68 @@ xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routePara
 
         $scope.giveAways = GiveAways.get({id: $routeParams.id});
 
-        $scope.prizes = {prizes:[]};
+        $scope.prizes = {prizes: []};
 
-        $scope.createGiveAway = function() {
+        $scope.createGiveAway = function () {
             $scope.prizes = Prizes.query();
             $('#createGiveAwayModal').modal();
         }
 
-        $scope.saveGiveAway = function(input) {
+        $scope.saveGiveAway = function (input) {
             if (input != undefined && $scope.createGiveAwayForm.$valid) {
-                GiveAway.save({id: $routeParams.id}, input, function(response){
+                GiveAway.save({id: $routeParams.id}, input, function (response) {
                     $('#createGiveAwayModal').modal('toggle');
                     $route.reload();
                 });
             }
         }
-        
+
         $scope.drawDialog = function(giveAway) {
-        
             $scope.draws = Draws.query({eventId: $routeParams.id, id: giveAway.id})
-            $scope.giveaway = giveAway
+            $scope.giveaway = giveAway;
             $('#createDrawPrizeModal').modal();
         }
-        
-        $scope.draw = function(input) {
-        
+
+        $scope.draw = function (input) {
+
             DrawPost.save({eventId: $routeParams.id, id: $scope.giveaway.id}, input, function(response){
-                 drawId = response.resourceUrl.split("/").slice(-1)[0] 
-                 $scope.winner = Draw.query({eventId: $routeParams.id, giveawayId: $scope.giveaway.id, id: drawId})
-                 $('#createPrizeDrawnModal').modal();    
-                
-            })
+                drawId = response.resourceUrl.split("/").slice(-1)[0]
+                $scope.winner = Draw.query({eventId: $routeParams.id, giveawayId: $scope.giveaway.id, id: drawId})
+                $('#createPrizeDrawnModal').modal();
+            }, function(response){
+                $('#createDrawPrizeModal').modal('toggle');
+                displayError({
+                    text: '<b>'+response.data.error+':</b> '+response.data.message
+                });
+            });
         }
 
-        $scope.confirm = function(input) {
-            
-            DrawConfirm.confirm({eventId: $routeParams.id, giveawayId: $scope.giveaway.id, id: $scope.winner.id}, {confirmed: "true"}, function(response){
-                 
-                  GiveAwaySingle.query({eventId: $routeParams.id, id: $scope.giveaway.id}, {}, function(response){
-                  $('#createPrizeDrawnModal').modal('toggle');
-                  $('#createDrawPrizeModal').modal('toggle');
-                    $scope.giveaway = response
-                    $scope.drawDialog($scope.giveaway)
-                  
-                  })
-                  
-                      
-                                  
-            })
-        }
+        $scope.confirm = function (input) {
 
-        
+            DrawConfirm.confirm({eventId: $routeParams.id, giveawayId: $scope.giveaway.id, id: $scope.winner.id}, {confirmed: "true"}, function (response) {
+
+                GiveAwaySingle.query({eventId: $routeParams.id, id: $scope.giveaway.id}, {}, function (response) {
+                    $('#createPrizeDrawnModal').modal('toggle');
+                    $('#createDrawPrizeModal').modal('toggle');
+                    $scope.giveaway = response;
+                    $scope.drawDialog($scope.giveaway);
+                    $scope.giveAways = GiveAways.get({id: $routeParams.id});
+                });
+            });
+        }
     }
 ]);
 
-xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', function($scope, $location, Prizes) {
+xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', function ($scope, $location, Prizes) {
     $scope.list = Prizes.query();
 
-    $scope.add = function() {
+    $scope.add = function () {
         $location.path('/prizes/add');
     };
 }]);
 
-xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'serverUrl', 'Prizes', function($scope, $location, $http, serverUrl, Prizes) {
-    $scope.save = function(prize) {
+xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'serverUrl', 'Prizes', function ($scope, $location, $http, serverUrl, Prizes) {
+    $scope.save = function (prize) {
         if (prize != undefined && $scope.prizeAddForm.$valid) {
             $http({
                 url: serverUrl + '/prize',
@@ -109,9 +107,9 @@ xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'se
                     'Content-Type': 'application/json'
                 },
                 data: prize
-            }).success(function(response){
+            }).success(function (response) {
                     $location.path('/prizes');
-                }).error(function(){
+                }).error(function () {
                     displayError({
                         text: 'Error :)'
                     });
@@ -119,7 +117,7 @@ xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'se
         }
     };
 
-    $scope.cancel = function() {
+    $scope.cancel = function () {
         $location.path('/prizes');
     };
 }]);
