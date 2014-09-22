@@ -173,3 +173,12 @@ body {
     width: auto;
     max-height: 200px;
 }
+
+td.giveaway-image {
+    width: 32px;
+}
+
+td.giveaway-image img {
+    max-width: 32px;
+    height: auto;
+}

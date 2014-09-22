@@ -14,6 +14,7 @@
     <table class="table" ng-if="giveAways.giveAways.length">
         <thead>
         <tr>
+            <th></th>
             <th>Give-away name</th>
             <th>Amount</th>
             <th>Winners</th>
@@ -22,10 +23,14 @@
         </thead>
         <tbody>
         <tr ng-repeat="giveAway in giveAways.giveAways">
-            <td style="width:320px;">{{giveAway.prizeName}}</td>
+            <td class="giveaway-image">
+                <img ng-if="giveAway.imageUrl.length" ng-src="{{giveAway.imageUrl}}"/>
+            </td>
+            <td style="width:320px;"><b>{{giveAway.prizeName}}</b></td>
             <td>{{giveAway.amount}}</td>
             <td>
                 <span ng-repeat="winner in giveAway.winners">{{winner.displayName}}, </span>
+                <span ng-if="!giveAway.winners.length"><em>No winners yet...</em></span>
             </td>
             <td>
                 <button class="btn btn-primary draw-button" ng-click="drawDialog(giveAway)">Draw prize!</button>
