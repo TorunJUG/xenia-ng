@@ -4,6 +4,8 @@ Xenia-ng is a frontend for Xenia application. It requires node.js to download de
  
  npm start
  
+Application is available on http://localhost:8000/app
+ 
 Application assumes that Xenia-Api (https://github.com/maeph/Xenia-Api) is launched on localhost:8080.
  
 ## Features
