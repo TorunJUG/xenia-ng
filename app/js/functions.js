@@ -19,3 +19,4 @@ function displayError(object) {
 
     div.append(button).append(object.text).prependTo(jQuery(prependTo));
 }
+

@@ -61,6 +61,27 @@ xeniaServices.factory('DrawPost', ['$resource', 'serverUrl',
     }
 ]);
 
+xeniaServices.factory('DrawPut', ['$resource', 'serverUrl',
+    function($resource, serverUrl){
+        return $resource(serverUrl + '/event/:eventId/giveaway/:giveAwayId/draw/:id', {}, {
+            update: {method: 'PUT', isArray: false}
+            
+        });
+    }
+]);
+
+xeniaServices.factory('AllDrawPost', ['$resource', 'serverUrl',
+    function($resource, serverUrl){
+        return $resource(serverUrl + '/event/:eventId/all-draws');
+    }
+]);
+
+xeniaServices.factory('ConfirmAllDrawPost', ['$resource', 'serverUrl',
+    function($resource, serverUrl){
+        return $resource(serverUrl + '/event/:eventId/draws/confirm');
+    }
+]);
+
 xeniaServices.factory('Draw', ['$resource', 'serverUrl',
     function($resource, serverUrl){
         return $resource(serverUrl + '/event/:eventId/giveaway/:giveawayId/draw/:id', {}, {

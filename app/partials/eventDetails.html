@@ -10,7 +10,44 @@
     <div ng-if="!giveAways.giveAways.length" class="alert alert-info">
         <p>There are no give-aways defined. <strong>Create your first give-away.</strong></p>
     </div>
+    <button class="btn btn-primary" ng-click="drawAll()">Draw prizes!</button>
+    <table class="table" ng-if="giveAways.giveAways.length">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Give-away name</th>
+        <th>Winner</th>
+        <th></th>
+    </tr>
+    </thead>
+        <tr ng-repeat="draw in draws">
+            <td class="giveaway-image">
+                <img ng-if="giveAway.imageUrl.length" ng-src="{{draw.giveAway.imageUrl}}"/>
+            </td>
+            <td style="width:320px;"><b>{{draw.giveAway.prizeName}}</b></td>
+            <td>
+                <div class="col-lg-12" ng-if="attendees.attendees.length">
 
+                    <div class="col-lg-4 member-block">
+                        <div class="member-avatar">
+                            <img ng-if="draw.drawn.photoUrl.length" ng-src="{{draw.drawn.photoUrl}}"/>
+                            <img ng-if="!draw.drawn.photoUrl.length" ng-src="{{placeholderAvatar}}"/>
+                        </div>
+                        <div class="member-info">
+                            <p class="name">{{draw.drawn.displayName}}</p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td> 
+                <div ng-if="!draw.drawn.winner" >
+                    <button class="btn btn-primary draw-button" ng-click="redraw(draw.giveAway.id, draw.drawn.drawId)">Draw Again!</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <button class="btn btn-primary draw-button" ng-click="confirmAll()">Confirm draws!</button>
+    <h3 class="page-header">Winners</h3>
     <table class="table" ng-if="giveAways.giveAways.length">
         <thead>
         <tr>
@@ -31,9 +68,6 @@
             <td>
                 <span ng-repeat="winner in giveAway.winners">{{winner.displayName}}, </span>
                 <span ng-if="!giveAway.winners.length"><em>No winners yet...</em></span>
-            </td>
-            <td>
-                <button class="btn btn-primary draw-button" ng-click="drawDialog(giveAway)">Draw prize!</button>
             </td>
         </tr>
         </tbody>
