@@ -138,6 +138,9 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', func
     $scope.add = function () {
         $location.path('/prizes/add');
     };
+    $scope.update = function (id) {
+            $location.path('/prize/'+ id + '/edit');
+        };
 }]);
 
 xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'serverUrl', 'Prizes', function ($scope, $location, $http, serverUrl, Prizes) {
