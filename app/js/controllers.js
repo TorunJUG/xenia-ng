@@ -177,7 +177,22 @@ xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'se
     $scope.cancel = function () {
         $location.path('/prizes');
     };
-}]);
+}
+]);
+
+xeniaControllers.controller('PrizeEditCtrl',['$scope','$location','$routeParams','Prize',function($scope, $location,$routeParams,Prize){
+
+    $scope.prize=Prize.get({id:$routeParams.id});
+
+
+    $scope.cancel = function () {
+        $location.path('/prizes');
+    };
+}
+]);
+
+
+
 
 xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeService', function ($scope, $location, PrizeService) {
     $scope.prize = PrizeService.getCurrent()
