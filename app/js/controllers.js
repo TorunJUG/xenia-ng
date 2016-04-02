@@ -184,6 +184,9 @@ xeniaControllers.controller('PrizeEditCtrl',['$scope','$location','$routeParams'
 
     $scope.prize=Prize.get({id:$routeParams.id});
 
+    $scope.update = function(prize){
+        Prize.update(prize);
+    }
 
     $scope.cancel = function () {
         $location.path('/prizes');
