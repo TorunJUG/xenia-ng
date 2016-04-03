@@ -138,6 +138,9 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', func
     $scope.add = function () {
         $location.path('/prizes/add');
     };
+
+    $scope.placeholderPrize = 'css/images/no-image.png';
+
     $scope.update = function (id) {
             $location.path('/prize/'+ id + '/edit');
         };

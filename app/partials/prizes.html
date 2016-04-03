@@ -11,7 +11,8 @@
         </thead>
         <tbody>
         <tr ng-repeat="prize in list.prizes">
-            <td class="prize-thumb"><img ng-src="{{prize.imageUrl}}" /></td>
+            <td class="prize-thumb" ng-if="prize.imageUrl.length"><img ng-src="{{prize.imageUrl}}" /></td>
+            <td class="prize-thumb" ng-if="!prize.imageUrl.length"><img ng-src="{{placeholderPrize}}" /></td>
             <td>{{prize.name}}<br /><b>ID:</b> {{prize.id}}</td>
             <td>{{prize.producer}}</td>
             <td>{{prize.sponsorName}}</td>
