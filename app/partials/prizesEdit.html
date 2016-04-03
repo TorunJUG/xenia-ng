@@ -1,18 +1,18 @@
 <div ng-controller="PrizeEditCtrl">
 
-    <h1 class="page-header">Add prize</h1>
+    <h1 class="page-header">Edit prize id: {{prize.id}}</h1>
 
     <form class="form-horizontal col-sm-8 css-form" role="form" name="prizeEditForm">
         <div class="form-group">
             <label for="name" class="col-sm-3 control-label">Name:</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="name" ng-model="prize.name" required="">
+                <input type="text" class="form-control" id="name" ng-model="prize.name" required>
             </div>
         </div>
         <div class="form-group">
             <label for="producer" class="col-sm-3 control-label">Producer:</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="producer" ng-model="prize.producer" required="">
+                <input type="text" class="form-control" id="producer" ng-model="prize.producer" required>
             </div>
         </div>
         <div class="form-group">
@@ -29,8 +29,14 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-10">
-                <button class="btn btn-success" ng-click="prize.update()">Save</button>
-                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-success" ng-click="save()">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Save
+                </button>
+                <button class="btn btn-default" ng-click="cancel()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cancel
+                </button>
             </div>
         </div>
     </form>
