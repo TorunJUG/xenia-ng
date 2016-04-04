@@ -4,14 +4,32 @@
         <thead>
         <tr>
             <th>Image</th>
-            <th>Name</th>
-            <th>Producer</th>
-            <th>Sponsor</th>
+            <th>
+                <a href="#/prizes" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    Name
+                    <span ng-show="sortType == 'name' && sortReverse == false" class="glyphicon glyphicon-triangle-bottom"></span>
+                    <span ng-show="sortType == 'name' && sortReverse == true" class="glyphicon glyphicon-triangle-top"></span>
+                </a>
+            </th>
+            <th>
+                <a href="#/prizes" ng-click="sortType = 'producer'; sortReverse = !sortReverse">
+                    Producer
+                    <span ng-show="sortType == 'producer' && sortReverse == false" class="glyphicon glyphicon-triangle-bottom"></span>
+                    <span ng-show="sortType == 'producer' && sortReverse == true" class="glyphicon glyphicon-triangle-top"></span>
+                </a>
+            </th>
+            <th>
+                <a href="#/prizes" ng-click="sortType = 'sponsorName'; sortReverse = !sortReverse">
+                    Sponsor
+                    <span ng-show="sortType == 'sponsorName' && sortReverse == false" class="glyphicon glyphicon-triangle-bottom"></span>
+                    <span ng-show="sortType == 'sponsorName' && sortReverse == true" class="glyphicon glyphicon-triangle-top"></span>
+                </a>
+            </th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="prize in list.prizes">
+        <tr ng-repeat="prize in list.prizes | orderBy:sortType:sortReverse">
             <td class="prize-thumb" ng-if="prize.imageUrl.length"><img ng-src="{{prize.imageUrl}}" /></td>
             <td class="prize-thumb" ng-if="!prize.imageUrl.length"><img ng-src="{{placeholderPrize}}" /></td>
             <td>{{prize.name}}<br /><b>ID:</b> {{prize.id}}</td>

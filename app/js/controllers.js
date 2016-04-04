@@ -147,6 +147,9 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
             $location.path('/prize/'+ id);
             console.log('edit prize id:' + id);
         };
+
+    $scope.sortType = 'name';
+    $scope.sortReverse = false;
 }]);
 
 xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'serverUrl', 'Prizes', function ($scope, $location, $http, serverUrl, Prizes) {
