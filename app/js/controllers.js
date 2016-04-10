@@ -148,6 +148,8 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
             console.log('edit prize id:' + id);
         };
 
+    $scope.searchPrize = '';
+
     $scope.sortType = 'name';
     $scope.sortReverse = false;
 }]);

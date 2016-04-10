@@ -1,5 +1,13 @@
 <div ng-controller="PrizesCtrl">
     <h1 class="page-header">Prize List</h1>
+    <form ng-if="list.prizes.length">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                <input type="text" class="form-control" placeholder="Search" ng-model="$parent.searchPrize" >
+            </div>
+        </div>
+    </form>
     <table class="table" ng-if="list.prizes.length">
         <thead>
         <tr>
@@ -29,7 +37,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="prize in list.prizes | orderBy:sortType:sortReverse">
+        <tr ng-repeat="prize in list.prizes | filter:searchPrize | orderBy:sortType:sortReverse">
             <td class="prize-thumb" ng-if="prize.imageUrl.length"><img ng-src="{{prize.imageUrl}}" /></td>
             <td class="prize-thumb" ng-if="!prize.imageUrl.length"><img ng-src="{{placeholderPrize}}" /></td>
             <td>{{prize.name}}<br /><b>ID:</b> {{prize.id}}</td>
