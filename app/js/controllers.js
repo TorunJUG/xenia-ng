@@ -166,9 +166,9 @@ xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'se
                 data: prize
             }).success(function (response) {
                 $location.path('/prizes');
-            }).error(function () {
+            }).error(function (data, status) {
                 displayError({
-                    text: 'Error :)'
+                    text: 'Error: ' + data.message
                 });
             });
         }
@@ -189,10 +189,10 @@ xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeServi
                 $location.path('/prizes');
                 console.log('Successfully updated prize. Data:' + response);
             }).error(function (data, status) {
-                displayError({
-                    text: 'Status code ' + status + '! Details: ' + data.message
-                });
-                console.log('Prize update was not successful! Status: ' + status + ' Details: ' + data.message);
+                    text: 'Error: ' + data.message
+                    });
+                   displayError({
+                 console.log('Prize update was not successful! Status: ' + status + ' Details: ' + data.message);
             });
         }
         else {
