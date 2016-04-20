@@ -189,10 +189,10 @@ xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeServi
                 $location.path('/prizes');
                 console.log('Successfully updated prize. Data:' + response);
             }).error(function (data, status) {
+                displayError({
                     text: 'Error: ' + data.message
-                    });
-                   displayError({
-                 console.log('Prize update was not successful! Status: ' + status + ' Details: ' + data.message);
+                });
+                console.log('Prize update was not successful! Status: ' + status + ' Details: ' + data.message);
             });
         }
         else {
