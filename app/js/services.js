@@ -114,11 +114,12 @@ xeniaServices.service('PrizeService', function($http, serverUrl) {
 
         this.update = function(prize) {
             console.log('PrizeService.update(' + prize.id + ')');
-            this.currentPrize = prize;
-            return $http.put(serverUrl + '/prize/' + prize.id, prize);
+            //note: xenia api for update doesn't expect id in prize object
+            var prizeReq = { name:prize.name, producer:prize.producer, sponsorName:prize.sponsorName, imageUrl: prize.imageUrl };
+            return $http.put(serverUrl + '/prize/' + prize.id, prizeReq);
         }
 
-        //note: Not nice solution (state added), not working via opennig edit page with id via url
+        //note: Not nice solution (state added), not working via opening edit page with id provided via url
         this.getCurrent = function() {
             console.log('PrizeService.getCurrent(). Returns prize.id: ' + this.currentPrize.id);
             return this.currentPrize
