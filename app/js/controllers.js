@@ -153,6 +153,20 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
     $scope.sortType = 'name';
     $scope.sortReverse = false;
 
+    $scope.startDelete = function() {
+        $scope.isDeleting = true;
+    };
+
+    var stopDelete = function() {
+        $scope.isDeleting = false;
+    };
+
+    $scope.cancelDelete = function() {
+        stopDelete();
+    };
+
+    $scope.isDeleting = false;
+
     $scope.delete = function (prize) {
         Prize.delete({id: prize.id}).$promise.then(
             function(response){
@@ -160,6 +174,7 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
                     if (index !==-1) {
                          $scope.list.prizes.splice(index, 1);
                     }
+                stopDelete();
                 console.debug('Successfully deleted prize. Data:' + response);
             },
             function(error){

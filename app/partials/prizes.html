@@ -48,7 +48,15 @@
                     <span class="glyphicon glyphicon-edit"></span>
                     Edit
                 </button>
-                <button type="button" class="btn btn-danger btn-sm" ng-click="delete(prize)">
+                <button ng-hide="isDeleting" type="button" class="btn btn-danger btn-sm" ng-click="startDelete()">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Delete
+                </button>
+                <button ng-show="isDeleting" type="button" class="btn btn-default btn-sm" ng-click="cancelDelete()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Abort deletion
+                </button>
+                <button ng-show="isDeleting" type="button" class="btn btn-danger btn-sm" ng-click="delete(prize)">
                     <span class="glyphicon glyphicon-trash"></span>
                     Delete
                 </button>
