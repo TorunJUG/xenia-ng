@@ -141,7 +141,14 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
 
     $scope.delete = function (prize){
         console.log(Prize);
-        Prize.delete({id: prize.id})
+        Prize.delete({id: prize.id}).$promise.then(function(response){
+            var array = $scope.list.prizes;
+            array.splice(array.indexOf(prize),1);
+            console.log("Succesfully delete prize. Data: "+response);
+        },function(error){
+            displayError({text: "Error: "+ error.data.message})
+            console.error("Error during remove prize: "+error.data.message);
+        });
     }
 
     $scope.placeholderPrize = 'css/images/no-image.png';
