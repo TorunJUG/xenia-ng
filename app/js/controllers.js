@@ -163,6 +163,10 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
                         prize
                     ).success(function (response) {
                         $location.path('/prizes');
+                        var index = $scope.list.prizes.indexOf(prize)
+                        if (index !==-1) {
+                             $scope.list.prizes.splice(index, 1);
+                        }
                         console.log('Successfully deleted prize. Data:' + response);
                     }).error(function (data, status) {
                         displayError({
