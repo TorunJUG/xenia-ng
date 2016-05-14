@@ -102,8 +102,7 @@ xeniaServices.factory('DrawConfirm', ['$resource', 'serverUrl',
 xeniaServices.factory('Prizes', ['$resource', 'serverUrl',
         function ($resource, serverUrl) {
             return $resource(serverUrl + '/prizes', {}, {
-                query: {method: 'GET', isArray: false},
-
+                query:  {method: 'GET', isArray: false},
             })
         }
     ]
@@ -112,7 +111,8 @@ xeniaServices.factory('Prizes', ['$resource', 'serverUrl',
 xeniaServices.factory('Prize', ['$resource', 'serverUrl',
         function ($resource, serverUrl) {
             return $resource(serverUrl + '/prize/:id', {id: '@id'}, {
-                update: {method: 'PUT'}
+                update: {method: 'PUT'},
+                delete: {method: 'DELETE'}
             })
 
         }

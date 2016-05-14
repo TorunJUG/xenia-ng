@@ -159,21 +159,29 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
     $scope.sortReverse = false;
 
     $scope.delete = function (prize) {
-         PrizeService.delete(
-                        prize
-                    ).success(function (response) {
-                        $location.path('/prizes');
-                        var index = $scope.list.prizes.indexOf(prize)
-                        if (index !==-1) {
-                             $scope.list.prizes.splice(index, 1);
-                        }
-                        console.log('Successfully deleted prize. Data:' + response);
-                    }).error(function (data, status) {
-                        displayError({
-                            text: 'Error: ' + data.message
-                        });
-                        console.log('Prize delete was not successful! Status: ' + status + ' Details: ' + data.message);
-                    });
+
+        Prize.delete({id: prize.id}).$promise.then(
+            function(response){
+                list.splice(list.indexOf(prize),1);
+                console.log('Successfully deleted prize. Data:' + response);
+            },
+            function(error){
+                displayError({text: 'Error: '+error.data.message})
+                console.warn(error);
+            }
+        );
+
+         //PrizeService.delete(
+         //               prize
+         //           ).success(function (response) {
+         //               $location.path('/prizes');
+         //               console.log('Successfully deleted prize. Data:' + response);
+         //           }).error(function (data, status) {
+         //               displayError({
+         //                   text: 'Error: ' + data.message
+         //               });
+         //               console.log('Prize delete was not successful! Status: ' + status + ' Details: ' + data.message);
+         //           });
     };
 }]);
 
