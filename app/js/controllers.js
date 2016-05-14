@@ -132,12 +132,17 @@ xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routePara
     }
 ]);
 
-xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'PrizeService', function ($scope, $location, Prizes, PrizeService) {
+xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'PrizeService','Prize', function ($scope, $location, Prizes, PrizeService,Prize) {
     $scope.list = Prizes.query();
 
     $scope.add = function () {
         $location.path('/prizes/add');
     };
+
+    $scope.delete = function (prize){
+        console.log(Prize);
+        Prize.delete({id: prize.id})
+    }
 
     $scope.placeholderPrize = 'css/images/no-image.png';
 
