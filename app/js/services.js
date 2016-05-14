@@ -126,26 +126,26 @@ xeniaServices.service('PrizeService', function($http, serverUrl) {
         this.currentPrize = {};
 
         this.update = function(prize) {
-            console.log('PrizeService.update(' + prize.id + ')');
+            console.debug('PrizeService.update(' + prize.id + ')');
             //note: xenia api for update doesn't expect id in prize object
             var prizeReq = { name:prize.name, producer:prize.producer, sponsorName:prize.sponsorName, imageUrl: prize.imageUrl };
             return $http.put(serverUrl + '/prize/' + prize.id, prizeReq);
         }
 
         this.delete = function (prize) {
-            console.log('PrizeService.delete(' + prize.id + ')');
+            console.debug('PrizeService.delete(' + prize.id + ')');
             return $http.delete(serverUrl + '/prize/' + prize.id);
         }
         //note: Not nice solution (state added), not working via opening edit page with id provided via url
         this.getCurrent = function() {
-            console.log('PrizeService.getCurrent(). Returns prize.id: ' + this.currentPrize.id);
+            console.debug('PrizeService.getCurrent(). Returns prize.id: ' + this.currentPrize.id);
             return this.currentPrize
         }
         //note: asking for troubles but i am too despered to make this work
         //todo: remove state from service
         this.setCurrent = function(prize) {
             this.currentPrize = prize;
-            console.log('PrizeService.setCurrent(' + prize.id + ')');
+            console.debug('PrizeService.setCurrent(' + prize.id + ')');
         }
     }
 );

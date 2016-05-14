@@ -139,18 +139,13 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
         $location.path('/prizes/add');
     };
 
-    $scope.delete = function (prize){
-        console.log(Prize);
-        Prize.delete({id: prize.id})
-    }
-
     $scope.placeholderPrize = 'css/images/no-image.png';
 
     $scope.edit = function (prize) {
             PrizeService.setCurrent(prize);
             var id = prize.id;
             $location.path('/prize/'+ id);
-            console.log('edit prize id:' + id);
+            console.debug('edit prize id:' + id);
         };
 
     $scope.searchPrize = '';
@@ -159,15 +154,17 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
     $scope.sortReverse = false;
 
     $scope.delete = function (prize) {
-
         Prize.delete({id: prize.id}).$promise.then(
             function(response){
-                list.splice(list.indexOf(prize),1);
-                console.log('Successfully deleted prize. Data:' + response);
+                var index = $scope.list.prizes.indexOf(prize)
+                    if (index !==-1) {
+                         $scope.list.prizes.splice(index, 1);
+                    }
+                console.debug('Successfully deleted prize. Data:' + response);
             },
             function(error){
                 displayError({text: 'Error: '+error.data.message})
-                console.warn(error);
+                console.error('Prize delete unsuccessful! Details: ' + error);
             }
         );
 
@@ -236,16 +233,16 @@ xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeServi
                 $scope.prize
             ).success(function (response) {
                 $location.path('/prizes');
-                console.log('Successfully updated prize. Data:' + response);
+                console.debug('Successfully updated prize. Data:' + response);
             }).error(function (data, status) {
                 displayError({
                     text: 'Error: ' + data.message
                 });
-                console.log('Prize update was not successful! Status: ' + status + ' Details: ' + data.message);
+                console.error('Prize update was not successful! Status: ' + status + ' Details: ' + data.message);
             });
         }
         else {
-            console.log('Edit prize is not defined or valid')
+            console.warn('Edit prize is not defined or valid')
         }
     };
 
