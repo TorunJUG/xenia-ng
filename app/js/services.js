@@ -112,7 +112,8 @@ xeniaServices.factory('Prizes', ['$resource', 'serverUrl',
 xeniaServices.factory('Prize', ['$resource', 'serverUrl',
         function ($resource, serverUrl) {
             return $resource(serverUrl + '/prize/:id', {id: '@id'}, {
-                update: {method: 'PUT'}
+                update: {method: 'PUT'},
+                delete: {method: 'DELETE'}
             })
 
         }
@@ -131,6 +132,8 @@ xeniaServices.service('PrizeService', function($http, serverUrl) {
             var prizeReq = { name:prize.name, producer:prize.producer, sponsorName:prize.sponsorName, imageUrl: prize.imageUrl };
             return $http.put(serverUrl + '/prize/' + prize.id, prizeReq);
         }
+
+
 
         //note: Not nice solution (state added), not working via opening edit page with id provided via url
         this.getCurrent = function() {
