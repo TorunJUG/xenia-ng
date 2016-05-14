@@ -152,6 +152,20 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
 
     $scope.sortType = 'name';
     $scope.sortReverse = false;
+
+    $scope.delete = function (prize) {
+         PrizeService.delete(
+                        prize
+                    ).success(function (response) {
+                        $location.path('/prizes');
+                        console.log('Successfully deleted prize. Data:' + response);
+                    }).error(function (data, status) {
+                        displayError({
+                            text: 'Error: ' + data.message
+                        });
+                        console.log('Prize delete was not successful! Status: ' + status + ' Details: ' + data.message);
+                    });
+    };
 }]);
 
 xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'serverUrl', 'Prizes', function ($scope, $location, $http, serverUrl, Prizes) {

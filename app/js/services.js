@@ -132,6 +132,11 @@ xeniaServices.service('PrizeService', function($http, serverUrl) {
             return $http.put(serverUrl + '/prize/' + prize.id, prizeReq);
         }
 
+        this.delete = function (prize) {
+            console.log('PrizeService.delete(' + prize.id + ')');
+            return $http.delete(serverUrl +'/prize/' + prize.id);
+        }
+
         //note: Not nice solution (state added), not working via opening edit page with id provided via url
         this.getCurrent = function() {
             console.log('PrizeService.getCurrent(). Returns prize.id: ' + this.currentPrize.id);
