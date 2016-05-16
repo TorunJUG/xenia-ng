@@ -2,7 +2,7 @@
   "name": "Xenia",
   "description": "AngularJS front for Xenia - giveaway tool",
   "version": "0.1.0",
-  "homepage": "https://github.com/angular/angular-phonecat",
+  "homepage": "https://github.com/TorunJUG/xenia-ng/",
   "license": "MIT",
   "private": true,
   "dependencies": {
