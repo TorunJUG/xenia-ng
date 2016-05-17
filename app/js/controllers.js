@@ -229,7 +229,7 @@ xeniaControllers.controller('PrizeEditCtrl',['$scope','$location','$routeParams'
 
     $scope.update = function(prize){
         Prize.update(prize);
-    }
+    };
 
     $scope.cancel = function () {
         $location.path('/prizes');
@@ -242,6 +242,7 @@ xeniaControllers.controller('PrizeEditCtrl',['$scope','$location','$routeParams'
 
 xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeService', function ($scope, $location, PrizeService) {
     $scope.prize = PrizeService.getCurrent()
+
     $scope.save = function (prize) {
         if ($scope.prize  != undefined && $scope.prizeEditForm.$valid) {
             PrizeService.update(
@@ -253,7 +254,7 @@ xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeServi
                 displayError({
                     text: 'Error: ' + data.message
                 });
-                console.error('Prize update was not successful! Status: ' + status + ' Details: ' + data.message);
+                console.error('Prize update was not successful!', status, data);
             });
         }
         else {
@@ -264,5 +265,18 @@ xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeServi
     $scope.cancel = function () {
         $location.path('/prizes');
     };
+
+
+    $scope.getProducers = function(prefix) {
+        return PrizeService.getPrizeProducers(prefix);
+    };
+
+    $scope.getSponsors = function(prefix) {
+            return PrizeService.getPrizeSponsors(prefix);
+        };
+
+    $scope.getNames = function(prefix) {
+            return PrizeService.getPrizeNames(prefix);
+        };
 }]);
 

@@ -6,19 +6,22 @@
         <div class="form-group">
             <label for="name" class="col-sm-3 control-label">Name:</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="name" ng-model="prize.name" required>
+                <input type="text" class="form-control" id="name" ng-model="prize.name" typeahead="name for name in getNames($viewValue) | limitTo:5"  typeahead-loading="loadingNames" required autocomplete="false">
+                <i ng-show="loadingNames" class="glyphicon glyphicon-refresh"></i>
             </div>
         </div>
         <div class="form-group">
             <label for="producer" class="col-sm-3 control-label">Producer:</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="producer" ng-model="prize.producer" required>
+                <input type="text" class="form-control" id="producer" ng-model="prize.producer" typeahead="producer for producer in getProducers($viewValue) | limitTo:5"  typeahead-loading="loadingProducers" autocomplete="false" required>
+                <i ng-show="loadingProducers" class="glyphicon glyphicon-refresh"></i>
             </div>
         </div>
         <div class="form-group">
             <label for="sponsorName" class="col-sm-3 control-label">Sponsor:</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="sponsorName" ng-model="prize.sponsorName">
+                <input type="text" class="form-control" id="sponsorName" ng-model="prize.sponsorName" typeahead="sponsor for sponsor in getSponsors($viewValue) | limitTo:5"  typeahead-loading="loadingSponsors" autocomplete="false">
+                <i ng-show="loadingSponsors" class="glyphicon glyphicon-refresh"></i>
             </div>
         </div>
         <div class="form-group">

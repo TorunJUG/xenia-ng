@@ -147,5 +147,57 @@ xeniaServices.service('PrizeService', function($http, serverUrl) {
             this.currentPrize = prize;
             console.debug('PrizeService.setCurrent(' + prize.id + ')');
         }
+
+        //Region autocomplete
+        this.getPrizeProducers = function (prefix) {
+            console.debug('PrizeService.getPrizeProducers(' + prefix + ')');
+            if (prefix == undefined || prefix == '') {
+               return [];
+            }
+            return $http.get(serverUrl + '/prize/autocomplete/producer' , {
+                      params : {
+                        q : prefix
+                      }
+                   }).then(function(response) {
+                      return response.data.sort();
+                   }).catch(function(response) {
+                      console.error('Getting prize producers was not successful!', response.status, response.data);
+                      return [];
+                   });
+        }
+
+        this.getPrizeSponsors = function (prefix) {
+            console.debug('PrizeService.getPrizeSponsors(' + prefix + ')');
+            if (prefix == undefined || prefix == '') {
+               return [];
+            }
+            return $http.get(serverUrl + '/prize/autocomplete/sponsor' , {
+                      params : {
+                        q : prefix
+                      }
+                   }).then(function(response) {
+                      return response.data.sort();
+                   }).catch(function(response) {
+                      console.error('Getting prize sponsors was not successful!', response.status, response.data);
+                      return [];
+                   });
+        }
+
+        this.getPrizeNames = function (prefix) {
+            console.debug('PrizeService.getPrizeNames(' + prefix + ')');
+            if (prefix == undefined || prefix == '') {
+               return [];
+            }
+            return $http.get(serverUrl + '/prize/autocomplete/name' , {
+                          params : {
+                            q : prefix
+                          }
+                       }).then(function(response) {
+                          return response.data.sort();
+                       }).catch(function(response) {
+                          console.error('Getting prize names was not successful!', response.status, response.data);
+                          return [];
+                       });
+        }
     }
 );
