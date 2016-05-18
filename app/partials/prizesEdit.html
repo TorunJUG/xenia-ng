@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="name" class="col-sm-3 control-label">Name:</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="name" ng-model="prize.name" typeahead="name for name in getNames($viewValue) | limitTo:5"  typeahead-loading="loadingNames" required autocomplete="false">
+                <input type="text" class="form-control" id="name" ng-model="prize.name" typeahead="name for name in getNames($viewValue) | limitTo:5"  typeahead-loading="loadingNames" autocomplete="false" required >
                 <i ng-show="loadingNames" class="glyphicon glyphicon-refresh"></i>
             </div>
         </div>
