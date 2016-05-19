@@ -13,7 +13,7 @@ module.exports = function(config) {
           'PhantomJS'
     ],
 
-    singleRun: false,
+    singleRun: true,
 
     autoWatch: true,
 
