@@ -1,9 +1,15 @@
 <div ng-controller="PrizesCtrl">
     <h1 class="page-header">Prize List</h1>
-    <form ng-if="list.prizes.length">
+    <form class="form-inline">
         <div class="form-group">
+            <button type="button" class="btn btn-success" ng-click="add()">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add
+            </button>
+        </div>
+        <div class="navbar-form navbar-right" ng-if="list.prizes.length" >
             <div class="input-group">
-                <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                <div class="input-group-addon" style="width:5%;"><i class="glyphicon glyphicon-search"></i></div>
                 <input type="text" class="form-control" placeholder="Search" ng-model="$parent.searchPrize" >
             </div>
         </div>
@@ -68,11 +74,4 @@
     <div class="alert alert-info" ng-if="!list.prizes.length">
         <p>There are no prizes defined. <strong>Define your first prize.</strong></p>
     </div>
-
-    <p>
-        <button type="button" class="btn btn-success" ng-click="add()">
-            <span class="glyphicon glyphicon-plus"></span>
-            Add
-        </button>
-    </p>
 </div>
