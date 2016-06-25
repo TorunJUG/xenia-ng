@@ -132,7 +132,7 @@ xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routePara
     }
 ]);
 
-xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'PrizeService', function ($scope, $location, Prizes, PrizeService) {
+xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'PrizeService','Prize', function ($scope, $location, Prizes, PrizeService,Prize) {
     $scope.list = Prizes.query();
 
     $scope.add = function () {
@@ -145,16 +145,59 @@ xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'Pri
             PrizeService.setCurrent(prize);
             var id = prize.id;
             $location.path('/prize/'+ id);
-            console.log('edit prize id:' + id);
+            console.debug('edit prize id:' + id);
         };
 
     $scope.searchPrize = '';
 
     $scope.sortType = 'name';
     $scope.sortReverse = false;
+
+    $scope.startDelete = function() {
+        $scope.isDeleting = true;
+    };
+
+    var stopDelete = function() {
+        $scope.isDeleting = false;
+    };
+
+    $scope.cancelDelete = function() {
+        stopDelete();
+    };
+
+    $scope.isDeleting = false;
+
+    $scope.delete = function (prize) {
+        Prize.delete({id: prize.id}).$promise.then(
+            function(response){
+                var index = $scope.list.prizes.indexOf(prize)
+                    if (index !==-1) {
+                         $scope.list.prizes.splice(index, 1);
+                    }
+                stopDelete();
+                console.debug('Successfully deleted prize. Data:' + response);
+            },
+            function(error){
+                displayError({text: 'Error: '+error.data.message})
+                console.error('Prize delete unsuccessful! Details: ' + error);
+            }
+        );
+
+         //PrizeService.delete(
+         //               prize
+         //           ).success(function (response) {
+         //               $location.path('/prizes');
+         //               console.log('Successfully deleted prize. Data:' + response);
+         //           }).error(function (data, status) {
+         //               displayError({
+         //                   text: 'Error: ' + data.message
+         //               });
+         //               console.log('Prize delete was not successful! Status: ' + status + ' Details: ' + data.message);
+         //           });
+    };
 }]);
 
-xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'serverUrl', 'Prizes', function ($scope, $location, $http, serverUrl, Prizes) {
+xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'serverUrl', 'Prizes', 'PrizeService', function ($scope, $location, $http, serverUrl, Prizes, PrizeService) {
     $scope.save = function (prize) {
         if (prize != undefined && $scope.prizeAddForm.$valid) {
             $http({
@@ -177,49 +220,58 @@ xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'se
     $scope.cancel = function () {
         $location.path('/prizes');
     };
-}
-]);
 
-xeniaControllers.controller('PrizeEditCtrl',['$scope','$location','$routeParams','Prize',function($scope, $location,$routeParams,Prize){
+    $scope.getProducers = function(prefix) {
+        return PrizeService.getPrizeProducers(prefix);
+    };
 
-    $scope.prize=Prize.get({id:$routeParams.id});
+    $scope.getSponsors = function(prefix) {
+            return PrizeService.getPrizeSponsors(prefix);
+    };
 
-    $scope.update = function(prize){
-        Prize.update(prize);
-    }
-
-    $scope.cancel = function () {
-        $location.path('/prizes');
+    $scope.getNames = function(prefix) {
+            return PrizeService.getPrizeNames(prefix);
     };
 }
 ]);
 
-
-
-
 xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeService', function ($scope, $location, PrizeService) {
     $scope.prize = PrizeService.getCurrent()
+
     $scope.save = function (prize) {
         if ($scope.prize  != undefined && $scope.prizeEditForm.$valid) {
             PrizeService.update(
                 $scope.prize
             ).success(function (response) {
                 $location.path('/prizes');
-                console.log('Successfully updated prize. Data:' + response);
+                console.debug('Successfully updated prize. Data:' + response);
             }).error(function (data, status) {
                 displayError({
                     text: 'Error: ' + data.message
                 });
-                console.log('Prize update was not successful! Status: ' + status + ' Details: ' + data.message);
+                console.error('Prize update was not successful!', status, data);
             });
         }
         else {
-            console.log('Edit prize is not defined or valid')
+            console.warn('Edit prize is not defined or valid')
         }
     };
 
     $scope.cancel = function () {
         $location.path('/prizes');
     };
+
+
+    $scope.getProducers = function(prefix) {
+        return PrizeService.getPrizeProducers(prefix);
+    };
+
+    $scope.getSponsors = function(prefix) {
+            return PrizeService.getPrizeSponsors(prefix);
+        };
+
+    $scope.getNames = function(prefix) {
+            return PrizeService.getPrizeNames(prefix);
+        };
 }]);
 

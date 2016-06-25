@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var xeniaApp = angular.module('xeniaApp', ['ngRoute', 'xeniaControllers', 'xeniaServices']);
+var xeniaApp = angular.module('xeniaApp', ['ngRoute', 'ui.bootstrap', 'xeniaControllers', 'xeniaServices']);
 
 xeniaApp.value('serverUrl', 'http://localhost:8080');
 xeniaApp.value('notificationArea', '#process-notification-area');
@@ -43,3 +43,30 @@ xeniaApp.config(['$routeProvider', '$httpProvider',
                 redirectTo: '/events'
             });
     }]);
+/*Logging for binding*/
+/*xeniaApp.config(function($provide){
+    $provide.decorator("$interpolate", function($delegate){
+
+        var interpolateWrap = function(){
+            var interpolationFn = $delegate.apply(this, arguments);
+            if(interpolationFn) {
+                return interpolationFnWrap(interpolationFn, arguments);
+            }
+        };
+
+        var interpolationFnWrap = function(interpolationFn, interpolationArgs){
+            return function(){
+                var result = interpolationFn.apply(this, arguments);
+                var log = result ? console.log : console.warn;
+                log.call(console, "interpolation of  " + interpolationArgs[0].trim(),
+                                  ":", result.trim());
+                return result;
+            };
+        };
+
+        angular.extend(interpolateWrap, $delegate);
+        return interpolateWrap;
+
+    });
+});
+*/

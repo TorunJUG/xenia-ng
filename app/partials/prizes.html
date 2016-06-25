@@ -1,39 +1,45 @@
 <div ng-controller="PrizesCtrl">
     <h1 class="page-header">Prize List</h1>
-    <form ng-if="list.prizes.length">
+    <form class="form-inline">
         <div class="form-group">
+            <button type="button" class="btn btn-success" ng-click="add()">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add
+            </button>
+        </div>
+        <div class="navbar-form navbar-right" ng-if="list.prizes.length" >
             <div class="input-group">
-                <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                <div class="input-group-addon" style="width:5%;"><i class="glyphicon glyphicon-search"></i></div>
                 <input type="text" class="form-control" placeholder="Search" ng-model="$parent.searchPrize" >
             </div>
         </div>
     </form>
-    <table class="table" ng-if="list.prizes.length">
+    <table class="table table-hover" ng-if="list.prizes.length">
         <thead>
         <tr>
-            <th>Image</th>
-            <th>
+            <th class="col-md-1">Image</th>
+            <th class="col-md-3">
                 <a href="#/prizes" ng-click="sortType = 'name'; sortReverse = !sortReverse">
                     Name
                     <span ng-show="sortType == 'name' && sortReverse == false" class="glyphicon glyphicon-triangle-bottom"></span>
                     <span ng-show="sortType == 'name' && sortReverse == true" class="glyphicon glyphicon-triangle-top"></span>
                 </a>
             </th>
-            <th>
+            <th class="col-md-1">
                 <a href="#/prizes" ng-click="sortType = 'producer'; sortReverse = !sortReverse">
                     Producer
                     <span ng-show="sortType == 'producer' && sortReverse == false" class="glyphicon glyphicon-triangle-bottom"></span>
                     <span ng-show="sortType == 'producer' && sortReverse == true" class="glyphicon glyphicon-triangle-top"></span>
                 </a>
             </th>
-            <th>
+            <th class="col-md-1">
                 <a href="#/prizes" ng-click="sortType = 'sponsorName'; sortReverse = !sortReverse">
                     Sponsor
                     <span ng-show="sortType == 'sponsorName' && sortReverse == false" class="glyphicon glyphicon-triangle-bottom"></span>
                     <span ng-show="sortType == 'sponsorName' && sortReverse == true" class="glyphicon glyphicon-triangle-top"></span>
                 </a>
             </th>
-            <th>Actions</th>
+            <th class="col-md-2">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -48,6 +54,18 @@
                     <span class="glyphicon glyphicon-edit"></span>
                     Edit
                 </button>
+                <button ng-hide="isDeleting" type="button" class="btn btn-danger btn-sm" ng-click="startDelete()">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Delete
+                </button>
+                <button ng-show="isDeleting" type="button" class="btn btn-default btn-sm" ng-click="cancelDelete()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Abort deletion
+                </button>
+                <button ng-show="isDeleting" type="button" class="btn btn-danger btn-sm" ng-click="delete(prize)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Delete
+                </button>
             </td>
         </tr>
         </tbody>
@@ -56,11 +74,4 @@
     <div class="alert alert-info" ng-if="!list.prizes.length">
         <p>There are no prizes defined. <strong>Define your first prize.</strong></p>
     </div>
-
-    <p>
-        <button type="button" class="btn btn-success" ng-click="add()">
-            <span class="glyphicon glyphicon-plus"></span>
-            Add
-        </button>
-    </p>
 </div>
