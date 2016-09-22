@@ -1,0 +1,1 @@
+angular.module('Xenia.Event', ['Xenia.Common']);

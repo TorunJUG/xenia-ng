@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-sm-10">
+        <h3 class="title">All Meetup events</h3>
+        <span class="label label-warning btn-lg">{{dashboard.events.length}}</span>
+    </div>
+    <div class="col-sm-2 text-right">
+        <p><button class="btn btn-success palette-orange positioned-right" ng-click="dashboard.refreshEvents()" ng-disabled="dashboard.isRefreshing"><span class="glyphicon-refresh glyphicon"></span></button></p>
+    </div>
+</div>
+
+<div ng-if="dashboard.isRefreshing">
+    <p class="text-center">Refreshing...</p>
+</div>
+
+<div ng-if="!dashboard.isRefreshing">
+    <div ng-if="dashboard.events.length">
+
+        <div ng-repeat="event in dashboard.events" class="row event">
+            <div class="col-sm-1 date">
+                {{event.time| date:'dd.MM.yyyy'}}
+            </div>
+            <div class="col-sm-11 name">
+                <a ng-href="#/event/{{event.id}}">{{event.name}}</a>
+            </div>
+        </div>
+
+    </div>
+</div>
