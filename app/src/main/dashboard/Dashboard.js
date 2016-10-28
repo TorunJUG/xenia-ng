@@ -1,0 +1,1 @@
+angular.module('Xenia.Dashboard', ['Xenia.Common']);

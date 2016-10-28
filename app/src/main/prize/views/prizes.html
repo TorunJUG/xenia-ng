@@ -1,0 +1,61 @@
+<h3 class="title">Prizes</h3>
+
+<ul class="list-inline">
+    <li><a ng-click="prizes.selectActive();">Active ({{prizes.active.length}})</a></li>
+    <li><a ng-click="prizes.selectInactive();">Inactive ({{prizes.inactive.length}})</a></li>
+</ul>
+
+<table class="table table-responsive table-condensed">
+    <thead>
+        <tr>
+            <th style="width:40px;">Image</th>
+            <th>Name</th>
+            <th class="text-right">
+                <button class="btn btn-primary btn-sm" ng-click="prizes.addNew()"><span class="glyphicon glyphicon-plus"></span></button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="prize in prizes.currentList">
+            <td><img class="img-responsive" ng-src="{{prize.imageUrl}}" /></td>
+            <td style="padding:10px 0 0 10px;">{{prize.name}}</td>
+            <td class="text-right">
+                <button class="btn btn-sm" ng-click="prizes.selectPrize(prize.id)"><span class="glyphicon glyphicon-edit"></span></button>
+                <button ng-if="prize.inactive" ng-click="prizes.makeActive(prize.id)" class="btn btn-sm btn-info">Make active</button>
+                <button ng-if="!prize.inactive" ng-click="prizes.makeInactive(prize.id)" class="btn btn-sm btn-danger">Make inactive</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="prizeModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Prize modal</h4>
+            </div>
+            <div class="modal-body">
+                <div class="clearfix">
+                    <form class="form" role="form">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input class="form-control" type="text" ng-required="true" ng-model="prizes.editingPrize.name" placeholder="Prize name" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input class="form-control" type="url" ng-required="true" ng-model="prizes.editingPrize.imageUrl" placeholder="Prize image URL" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-if="prizes.isEditing()" type="button" class="btn btn-primary" ng-click="prizes.update()">Update</button>
+                <button ng-if="!prizes.isEditing()" type="button" class="btn btn-primary" ng-click="prizes.create()">Create</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
