@@ -1,0 +1,125 @@
+<h3 class="title">{{event.details.name}}</h3>
+
+<div class="row">
+    <!-- LEFT COLUMN -->
+    <div class="col-md-9">
+        <button ng-click="event.openCreateGiveawayModal()" class="btn btn-primary btn-sm pull-right" style="margin: 20px 14px 0 0;"><span class="glyphicon glyphicon-plus"></span></button>
+        <h4 class="subtitle">Giveaways <span class="label label-warning">{{event.countGiveaways()}}</span></h4>
+
+        <div class="giveaways">
+            <div class="row giveaway" ng-repeat="giveaway in event.giveaways">
+                <div class="col-sm-1 text-center">
+                    <img ng-src="{{giveaway.prize.imageUrl}}" class="img-responsive" />
+                </div>
+                <div class="col-sm-5">
+                    <b>{{giveaway.amount}} &times; {{giveaway.prize.name}}</b>
+                    <br /><span class="label label-warning" ng-if="giveaway.emailRequired">Requires e-mail</span>
+                </div>
+                <div class="col-sm-4">
+                    <span ng-repeat="winner in event.winners[giveaway.id]">{{winner}}, </span>
+                </div>
+                <div class="col-sm-2 text-right" ng-if="event.canUpdateGiveaway(giveaway.id)">
+                    <button class="btn btn-xs" ng-click="event.selectGiveawayToUpdate(giveaway.id)"><span class="fui-new"></span></button>
+                    <button class="btn btn-xs" ng-click="event.deleteGiveaway(giveaway.id)"><span class="fui-trash"></span></button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="draw-area" ng-show="event.canDrawGiveaway()">
+            <p class="text-center">Currently drawing</p>
+            <h3 class="text-center">{{event.nextGiveaway().prize.name}}</h3>
+
+            <div ng-if="event.winnerDrawn()" style="margin:40px 0;">
+                <p class="text-center"><img src="https://cdn4.iconfinder.com/data/icons/PixeloPhilia_2/PNG/medal.png" /> And the winner is...</p>
+                <p class="text-center">
+                    <img ng-src="{{event.winner.photoUrl ? event.winner.photoUrl : event.avatarPlaceholder}}" class="img-circle" style="width:150px;height:150px;" />
+                </p>
+                <h3 class="text-center">{{event.winner.name}}</h3>
+            </div>
+
+            <p ng-if="!event.winnerDrawn()" class="text-center">
+                <button class="btn btn-success btn-lg" ng-click="event.drawCandidate(event.nextGiveaway().id)">DRAW!</button>
+            </p>
+
+            <p ng-if="event.winnerDrawn()" class="text-center">
+                <button class="btn btn-danger" ng-click="event.confirmWinnerAndDrawNextGiveaway(event.nextGiveaway().id)">CONFIRM</button>
+                <button class="btn btn-default" ng-click="event.drawCandidate(event.nextGiveaway().id)">DRAW AGAIN</button>
+            </p>
+        </div>
+
+        <div class="text-center" ng-show="event.drawFinished()">
+            <img src="https://cdn1.iconfinder.com/data/icons/powerful-seo-icon-set/512/ribbon_1__.png" />
+            <h3>That's all folks! Congratulations!</h3>
+
+            <p><a ng-href="{{event.downloadCsvUrl()}}">Download results in CSV file</a></p>
+        </div>
+
+    </div>
+    <!-- RIGHT COLUMN -->
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-10">
+                <h4 class="subtitle">Attendees <span class="label label-warning">{{event.attendees.length}}</span></h4>
+            </div>
+            <div class="col-md-2 text-right">
+                <button class="btn btn-success btn-sm positioned-right palette-orange"
+                        ng-disabled="event.refreshingAttendees"
+                        ng-click="event.refreshAttendees()">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row clearfix attendee" ng-repeat="attendee in event.attendees" ng-if="event.refreshingAttendees == false">
+            <div class="col-sm-12">
+                <p>
+                    <img class="img-circle img-responsive avatar" ng-src="{{attendee.photoUrl ? attendee.photoUrl : event.avatarPlaceholder}}" />
+                    <span ng-if="attendee.email" class="fui-check-circle email-verified" style="color:limegreen;"></span>
+                    {{attendee.name}}
+                </p>
+            </div>
+        </div>
+
+        <div class="text-center" ng-if="event.refreshingAttendees">
+            Refreshing...
+        </div>
+    </div>
+</div>
+
+<div id="giveawayModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Giveaway</h4>
+            </div>
+            <div class="modal-body">
+                <div class="clearfix">
+                    <form class="form" role="form">
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <select id="prizeId" name="prize" class="form-control" ng-model="event.giveaway.prize" ng-options="p.id as p.name for p in event.prizes"></select>
+                            </div>
+                            <div class="col-sm-2">
+                                <input name="amount" class="form-control" type="number" ng-model="event.giveaway.amount" min="1" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label class="checkbox">
+                                    <input name="emailRequired" class="custom-checkbox" type="checkbox" data-toggle="checkbox" ng-model="event.giveaway.emailRequired" /> Requires e-mail
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-if="!event.isCreatingNewGiveaway()" type="button" class="btn btn-primary" ng-click="event.updateGiveaway()">Update</button>
+                <button ng-if="event.isCreatingNewGiveaway()" type="button" class="btn btn-primary" ng-click="event.createGiveaway()">Create</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
