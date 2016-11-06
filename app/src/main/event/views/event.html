@@ -43,8 +43,9 @@
             </p>
 
             <p ng-if="event.winnerDrawn()" class="text-center">
-                <button class="btn btn-danger" ng-click="event.confirmWinnerAndDrawNextGiveaway(event.nextGiveaway().id)">CONFIRM</button>
-                <button class="btn btn-default" ng-click="event.drawCandidate(event.nextGiveaway().id)">DRAW AGAIN</button>
+                <button class="btn btn-danger positioned-left" ng-click="event.confirmWinnerAndDrawNextGiveaway(event.nextGiveaway().id)">CONFIRM</button>
+                <button class="btn btn-default" ng-click="event.drawCandidateAndSetCurrentWinnerAbsent(event.nextGiveaway().id)">ABSENT</button>
+                <button class="btn btn-default" ng-click="event.drawCandidateAndSkipCurrentWinner(event.nextGiveaway().id)">SKIP</button>
             </p>
         </div>
 

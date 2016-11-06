@@ -40,6 +40,10 @@ a {
     margin: 21px 0 0 0;
 }
 
+.positioned-left {
+    margin-right: 30px;
+}
+
 .x-color {
     font-weight: bolder;
     color: orange;
