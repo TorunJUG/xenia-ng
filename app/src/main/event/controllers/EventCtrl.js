@@ -96,17 +96,13 @@ angular.module('Xenia.Event')
         };
 
         event.drawCandidateAndSkipCurrentWinner = function(giveawayId) {
-            var skippedMemberId = (typeof event.winner.id != "undefined") ? event.winner.id : 0;
-
-            Giveaway.drawCandidateAndSkipMember($routeParams.id, giveawayId, skippedMemberId).then(function(result){
+            Giveaway.drawCandidateAndSkipMember($routeParams.id, giveawayId, event.winnerDrawnId()).then(function(result){
                 event.winner = result.data.member;
             });
         }
 
         event.drawCandidateAndSetCurrentWinnerAbsent = function(giveawayId) {
-            var absentMemberId = (typeof event.winner.id != "undefined") ? event.winner.id : 0;
-
-            Giveaway.drawCandidateAndSetAbsentMember($routeParams.id, giveawayId, absentMemberId).then(function(result){
+            Giveaway.drawCandidateAndSetAbsentMember($routeParams.id, giveawayId, event.winnerDrawnId()).then(function(result){
                 event.winner = result.data.member;
             });
         };
@@ -117,9 +113,13 @@ angular.module('Xenia.Event')
             });
         };
 
-        event.winnerDrawn = function(){
+        event.winnerDrawn = function() {
             return event.winner !== {} && event.winner.id > 0;
         };
+
+        event.winnerDrawnId = function() {
+            return event.winnerDrawn() ? event.winner.id : 0;
+        }
 
         event.confirmWinnerAndDrawNextGiveaway = function(giveawayId){
             Giveaway.confirmWinner($routeParams.id, giveawayId, event.winner.id).then(function(result){
