@@ -3,6 +3,37 @@
 <div class="row">
     <!-- LEFT COLUMN -->
     <div class="col-md-9">
+
+        <div class="draw-area" ng-show="event.canDrawGiveaway()">
+            <p class="text-center">Currently drawing</p>
+            <h3 class="text-center">{{event.nextGiveaway().prize.name}}</h3><br/>
+
+            <div ng-if="event.winnerDrawn()" style="margin:40px 0;">
+                <p class="text-center"><img src="https://cdn4.iconfinder.com/data/icons/PixeloPhilia_2/PNG/medal.png" /> And the winner is...</p>
+                <p class="text-center">
+                    <img ng-src="{{event.winner.photoUrl ? event.winner.photoUrl : event.avatarPlaceholder}}" class="img-circle" style="width:150px;height:150px;" />
+                </p>
+                <h3 class="text-center">{{event.winner.name}}</h3>
+            </div>
+
+            <p ng-if="!event.winnerDrawn()" class="text-center">
+                <button class="btn btn-success btn-lg" ng-click="event.drawCandidate(event.nextGiveaway().id)">DRAW!</button>
+            </p>
+
+            <p ng-if="event.winnerDrawn()" class="text-center">
+                <button class="btn btn-danger positioned-left" ng-click="event.confirmWinnerAndDrawNextGiveaway(event.nextGiveaway().id)">CONFIRM</button>
+                <button class="btn btn-default" ng-click="event.drawCandidateAndSetCurrentWinnerAbsent(event.nextGiveaway().id)">ABSENT</button>
+                <button class="btn btn-default" ng-click="event.drawCandidateAndSkipCurrentWinner(event.nextGiveaway().id)">SKIP</button>
+            </p>
+        </div>
+
+        <div class="text-center" ng-show="event.drawFinished()">
+            <img src="https://cdn1.iconfinder.com/data/icons/powerful-seo-icon-set/512/ribbon_1__.png" />
+            <h3>That's all folks! Congratulations!</h3>
+
+            <p><a ng-href="{{event.downloadCsvUrl()}}">Download results in CSV file</a></p><br/>
+        </div>
+
         <button ng-click="event.openCreateGiveawayModal()" class="btn btn-primary btn-sm pull-right" style="margin: 20px 14px 0 0;"><span class="glyphicon glyphicon-plus"></span></button>
         <h4 class="subtitle">Giveaways <span class="label label-warning">{{event.countGiveaways()}}</span></h4>
 
@@ -23,36 +54,6 @@
                     <button class="btn btn-xs" ng-click="event.deleteGiveaway(giveaway.id)"><span class="fui-trash"></span></button>
                 </div>
             </div>
-        </div>
-
-
-        <div class="draw-area" ng-show="event.canDrawGiveaway()">
-            <p class="text-center">Currently drawing</p>
-            <h3 class="text-center">{{event.nextGiveaway().prize.name}}</h3>
-
-            <div ng-if="event.winnerDrawn()" style="margin:40px 0;">
-                <p class="text-center"><img src="https://cdn4.iconfinder.com/data/icons/PixeloPhilia_2/PNG/medal.png" /> And the winner is...</p>
-                <p class="text-center">
-                    <img ng-src="{{event.winner.photoUrl ? event.winner.photoUrl : event.avatarPlaceholder}}" class="img-circle" style="width:150px;height:150px;" />
-                </p>
-                <h3 class="text-center">{{event.winner.name}}</h3>
-            </div>
-
-            <p ng-if="!event.winnerDrawn()" class="text-center">
-                <button class="btn btn-success btn-lg" ng-click="event.drawCandidate(event.nextGiveaway().id)">DRAW!</button>
-            </p>
-
-            <p ng-if="event.winnerDrawn()" class="text-center">
-                <button class="btn btn-danger" ng-click="event.confirmWinnerAndDrawNextGiveaway(event.nextGiveaway().id)">CONFIRM</button>
-                <button class="btn btn-default" ng-click="event.drawCandidate(event.nextGiveaway().id)">DRAW AGAIN</button>
-            </p>
-        </div>
-
-        <div class="text-center" ng-show="event.drawFinished()">
-            <img src="https://cdn1.iconfinder.com/data/icons/powerful-seo-icon-set/512/ribbon_1__.png" />
-            <h3>That's all folks! Congratulations!</h3>
-
-            <p><a ng-href="{{event.downloadCsvUrl()}}">Download results in CSV file</a></p>
         </div>
 
     </div>

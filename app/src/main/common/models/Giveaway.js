@@ -22,8 +22,16 @@ angular.module('Xenia.Common')
             return $http.get(XENIA_API_URL + "/events/" + eventId + "/giveaways/prizes/queue");
         };
 
-        model.drawCandidate = function(eventId, giveawayId, absentMemberId) {
+        model.drawCandidateAndSkipMember = function(eventId, giveawayId, skippedMemberId) {
+            return $http.get(XENIA_API_URL + "/events/" + eventId + "/giveaways/" + giveawayId + "/draw?skipped=" + skippedMemberId);
+        }
+
+        model.drawCandidateAndSetAbsentMember = function(eventId, giveawayId, absentMemberId) {
             return $http.get(XENIA_API_URL + "/events/" + eventId + "/giveaways/" + giveawayId + "/draw?absent=" + absentMemberId);
+        };
+
+        model.drawCandidate = function(eventId, giveawayId) {
+            return $http.get(XENIA_API_URL + "/events/" + eventId + "/giveaways/" + giveawayId + "/draw");
         };
 
         model.confirmWinner = function(eventId, giveawayId, winnerId) {
